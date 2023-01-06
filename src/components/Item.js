@@ -20,7 +20,7 @@ export const Item = (props) => {
     return (
 
 <div className="card lg:card-compact bg-base-100 shadow-xl">
-<figure><img className='object-scale-down h-80 w-80 border-box'src={product.imageSrc} alt={product.imageAlt}/></figure>
+<figure><img className='object-scale-down h-80 w-80 'src={product.imageSrc} alt={product.imageAlt}/></figure>
     <div className="card-body place-items-center" key={product.id}>
     <h2 className="card-title">{product.name}</h2>
     <p className='text-lg'>{product.price}</p>
