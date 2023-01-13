@@ -2,10 +2,12 @@ import React from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
 
+
 const CartContext = React.createContext({
     items: [],
     addToCart : () => {},
-    clearCart : () => {}
+    clearCart : () => {},
+    contadorCarrito : () => {},
 })
 
 
@@ -20,16 +22,44 @@ const CartContextProvider = ({children}) => {
 
 
     const addToCart = ( item ) => { 
-        setItems( items => items.concat(item) )
+        console.log(item)
+        const productToAdd = inCart(item.id)
+
+        if(productToAdd) {
+            productToAdd.quantity = item.quantity
+            setItems([...items])
+        } else {
+            setItems( items => items.concat(item))
+        }
+    }
+    
+    // ESTA CONST BUSCA SI ESTA EL PRODUCTO EN EL CARRITO, SI ESTA SUMA LA CANTIDAD
+    const inCart = (id) => items.find(product => product.id == id);
+
+    //ESTA SACA PRODUCTOS DE FORMA INDIVIDUAL DEL CARRITO
+    const removeItem = (id) => {
+        const newItems = items.filter(product => product.id != id);
+        setItems(newItems);
     }
 
-    const inCart = (id) => items.find(product => product.id == id) ? true : false;
 
-    const removeItem = (id) => setItems(setItems.filter(product => product.id !==id));
+    //ESTA FUNCION CALCULA EL TOTAL A PAGAR
+    const calculateTotal = () => {
+        return items.reduce((total, item) => total + item.quantity * item.price,0);
+        }
+        
+        const contadorCarrito = () => {
+            return items.reduce((total, item) => total + item.quantity, 0);
+        }
+        
 
+    //ESTA FUNCION VACIA EL CARRITO COMPLETO
     const clearCart = () => { 
         setItems( [] )
     }
+
+
+    
 
     const context = {
         items: items,
@@ -37,6 +67,9 @@ const CartContextProvider = ({children}) => {
         clearCart : clearCart,
         inCart : inCart,
         removeItem : removeItem,
+        calculateTotal: calculateTotal,
+        contadorCarrito : contadorCarrito,
+        
     }
 
 
@@ -46,7 +79,7 @@ const CartContextProvider = ({children}) => {
             {children}
         </CartContext.Provider>
     )
-    }
-
-export { CartContextProvider, useCart}
-
+    
+    }  
+export { CartContextProvider, useCart, CartContext}
+    
