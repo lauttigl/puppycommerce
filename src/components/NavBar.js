@@ -14,7 +14,7 @@ return (
     <div className="navbar bg-violet-100">
 <div className="flex-1">
     <Link to={'/'}>
-    <div className="btn btn-ghost normal-case text-xl">Puppy PetShop</div>
+    <div className="btn btn-ghost normal-case text-xl">Puppys PetShop</div>
     </Link>
 </div>
 <div className='flex-none'>
